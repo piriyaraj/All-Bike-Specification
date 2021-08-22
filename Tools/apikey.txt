@@ -1,0 +1,7 @@
+api key:AIzaSyDTVgOGrY11bDUQeWIyC0HcDqturb6vM64
+auth key: 809843320271-vfhtgmd7cevcgpuoqal3e94o53g5m7l1.apps.googleusercontent.com
+blog:https://www.googleapis.com/blogger/v3/blogs/7109014683179605133?key=AIzaSyDTVgOGrY11bDUQeWIyC0HcDqturb6vM64
+
+total post:https://www.googleapis.com/blogger/v3/blogs/7109014683179605133/posts?key=AIzaSyDTVgOGrY11bDUQeWIyC0HcDqturb6vM64
+
+specifc post:https://www.googleapis.com/blogger/v3/blogs/7109014683179605133/posts/1120524266011286418?key=AIzaSyDTVgOGrY11bDUQeWIyC0HcDqturb6vM64

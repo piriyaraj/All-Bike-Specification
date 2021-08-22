@@ -2,10 +2,10 @@ import re
 import requests
 from bs4 import BeautifulSoup
 import os
-url="https://bikez.com/years/index.php"
+url = "https://bikez.com/brands/index.php"
 
 
-def exractyearlink(url):
+def exractModelsLink(url):
     try:
         reqs = requests.get(url)
     except:
@@ -16,10 +16,13 @@ def exractyearlink(url):
     trs=table.findAll("tr")
     links=[]
     for i in trs[1:]:
+        if(i.findAll("td")[1].text==""):
+            # print("==>"+i.findAll("td")[0].text)
+            continue
         atag=i.findAll("a")[0]
 
-        link_y="https://bikez.com/"+atag.get_attribute_list("href")[0].split("../")[1]
-        links.append(link_y)
+        link_m="https://bikez.com/"+atag.get_attribute_list("href")[0].split("../")[1]
+        links.append(link_m)
 
     return links
 
@@ -31,6 +34,33 @@ def filemake(name):
         file=open(name,"r+")
     return file
 
+def expandUrlpost(url):
+    post_links = []
+    try:
+        reqs = requests.get(url)
+    except:
+        print("Check Internet connection !")
+        return []
+    soup = BeautifulSoup(reqs.text, 'html.parser')
+    table=soup.find_all('table')[2]
+    tr=table.find_all('tr')
+    # print(tr)
+    for i in tr:
+        if(tr.index(i)==0):
+            continue
+        tdTags = i.findAll('td')
+        if(len(tdTags)>2 or len(tdTags[0].findAll('img'))==0):
+            continue
+        
+        t=i.findAll('td')[1].findAll('a')
+        for i in t:
+            if(i.get_attribute_list('href')[0]==None):
+                continue
+            else:
+                link="https://bikez.com"+i.get_attribute_list("href")[0].split("..")[1]
+        post_links.append(link)
+    return post_links
+
 def exractpostlink(url):
     post_links=[]
     try:
@@ -41,16 +71,18 @@ def exractpostlink(url):
     soup = BeautifulSoup(reqs.text, 'html.parser')
     table=soup.find_all('table')[2]
     tr=table.find_all('tr')
+    # print(tr)
     for i in tr:
         if(tr.index(i)==0):
             continue
-        if(len(i.findAll('td'))==3):
-            linktag=i.findAll('td')[0]
-        elif(len(i.findAll('td'))==2):
-            linktag=i.findAll('td')[1]
-        else:
+        expandTag = i.findAll('td')[0].findAll('a')
+        if(len(expandTag)!=0):
+            expandUrl=url+expandTag[0].get_attribute_list('href')[0]
+            expandpostUrls = expandUrlpost(expandUrl)
+            post_links=post_links+expandpostUrls
             continue
-        t=linktag.findAll('a')
+        
+        t=i.findAll('td')[1].findAll('a')
         for i in t:
             if(i.get_attribute_list('href')[0]==None):
                 continue
@@ -62,30 +94,28 @@ def exractpostlink(url):
 
 
 def run():
-    try:os.makedirs("data/years")
+    try:
+        os.makedirs("data/models")
     except:pass
     global url
 
-    fileyearlinks=filemake("./data/years/yearlinks.txt")
+    fileModlelinks = filemake("./data/models/modelsLinks.txt")
 
     filetopost=filemake("./data/topost.txt")
-    year_links=exractyearlink(url)
-    for i in year_links:
-        yearllink=i
+    modelsLinks=exractModelsLink(url)
+    for modelLink in modelsLinks:
 
-        yearforfile=yearllink.split("year/")[1].split("-")[0]
-        try:
-            if(yearforfile.index("=")):
-                yearforfile=yearforfile.split("=")[1]
-        except:pass
-        print(yearforfile)
+        modelforfile = modelLink.split("models/")[1].split(".")[0]
+        # try:
+        #     if(yearforfile.index("=")):
+        #         yearforfile=yearforfile.split("=")[1]
+        # except:pass
+        print("\n\n>>> "+modelforfile,end="")
 
-
-        postlinks=exractpostlink(yearllink)
-
-
-        fileyear=filemake("./data/years/"+yearforfile+".txt")
-        links=fileyear.readlines()
+        postlinks = exractpostlink(modelLink)
+        print(" ||| NO of Post: ",len(postlinks))
+        fileModel = filemake("./data/models/"+modelforfile+".txt")
+        links = fileModel.readlines()
         for postlink in postlinks:
             try:
                 pos=links.index(postlink+"\n")
@@ -93,14 +123,26 @@ def run():
             if(pos==-1):
 
                 filetopost.write(postlink+"\n")
-                fileyear.write(postlink+"\n")
+                fileModel.write(postlink+"\n")
+                print("======>>>"+postlink)
 
-        fileyearlinks.write(yearllink+"\n")
-        fileyear.close()
+        fileModlelinks.write(modelLink+"\n")
+        fileModel.close()
 
-    fileyearlinks.close()
+    fileModlelinks.close()
     filetopost.close()
 
 
 #postlinks_n="https://bikez.com/year/2020-motorcycle-models.php"
 #linkss=exractpostlink(postlinks_n)
+if __name__ == "__main__":
+    # run()
+
+    # postLinks = exractpostlink("https://bikez.com/models/ajs_models.php")
+    # print(len(postLinks))
+
+    # expandpostUrls = expandUrlpost(
+    #     "https://bikez.com/models/access_models.php?expser=2784#explist")
+    # print(expandpostUrls)
+    run()
+    pass
