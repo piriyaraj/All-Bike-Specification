@@ -1,0 +1,14 @@
+table {
+    color: black;
+    width: 100%;
+}
+
+th {
+    background-color: #99c9ff;
+    text-align: center
+}
+
+td {
+    vertical-align: top;
+    width: 40%;
+}
