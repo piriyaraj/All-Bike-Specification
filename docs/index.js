@@ -10,10 +10,13 @@ var firebaseConfig = {
 };
 
 var tabelStart=`<table>
-            <tbody>
+            <thead>
                 <tr>
                     <th colspan="2"><strong>Table_Name</strong></th>
                 </tr>
+            </thead>
+            <tbody>
+                
                 <tr>`;
 var tableBody=`<tr>
                     <td><b>Key_Name</b></td>

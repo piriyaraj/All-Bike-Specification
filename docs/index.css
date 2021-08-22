@@ -1,11 +1,17 @@
+#root {
+    width: 90%;
+    margin: 0 auto;
+}
+
 table {
     color: black;
     width: 100%;
+    padding-bottom: 50px;
 }
 
 th {
-    background-color: #99c9ff;
-    text-align: center
+    background-color: #ffd580;
+    text-align: center;
 }
 
 td {
