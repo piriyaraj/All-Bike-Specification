@@ -109,8 +109,12 @@ function initPostArtical() {
     mainContent.appendChild(newSection); //append to the doc.body
     mainContent.insertBefore(newSection, mainContent.lastChild)
 }
-var tableDatas=loadDataFromFirebase("Acabion/Acabion Da Vinci 650-VI");
 
+bikeName=document.title
+category=bikeName.split(" ")[0]
+tablePath=category+"/"+bikeName   // firebase table path for speific bike
+
+var tableDatas=loadDataFromFirebase(tablePath);
 // initPreArtical();
 
 // initPostArtical();
