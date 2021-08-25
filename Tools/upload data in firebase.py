@@ -15,7 +15,7 @@ import urlexract
 databaseUrl = "https://all-bike-specification-default-rtdb.firebaseio.com/"
 
 
-noOfPost=100
+noOfPost=1000
 
 
 accNO=0
@@ -23,7 +23,7 @@ if(len(sys.argv)>1):
     accNO=int(sys.argv[1])
 # read first line
 def read():
-    file=open("./data/topost.txt","r")
+    file = open("./data/topost.txt", "r", encoding='utf-8')
     firLi=file.readline().replace("\n","")
     file.close()
     return firLi
@@ -106,7 +106,7 @@ def Run():
             if(url==""):
                 print("No new posts")
                 break
-
+        # print(url)
         try:
             title, category, tableDatas = ScrapTable.getdata(url)
         except Exception as e:

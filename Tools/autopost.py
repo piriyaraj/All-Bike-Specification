@@ -5,7 +5,7 @@ from oauth2client import client
 from googleapiclient import sample_tools
 import time
 
-noOfPost = 99
+noOfPost = 1
 
 
 def filemake(name):

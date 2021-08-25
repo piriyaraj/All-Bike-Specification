@@ -26,10 +26,11 @@ var tableBody=`<tr>
 
 firebase.initializeApp(firebaseConfig);
 // Add custom description for the post
-function putMetaDescri(){
+function putMetaDescri(bikeName){
+    let descri=bikeName+" Price,colors,millage,Engine,transmission,Chassis,suspension,brakes,wheels,Physical measures and capacities details are available"
     var meta = document.createElement('meta');
     meta.name = "description";
-    meta.content = "This is an example of a meta description. This will often show up in search results.";
+    meta.content = descri;
     document.getElementsByTagName('head')[0].appendChild(meta);
 }
 // intalize tables that contain all data about the bike
@@ -85,18 +86,17 @@ function loadDataFromFirebase(bikeName) {
 }
 
 // inilaize pre post section
-function initPreArtical() {
+function initPreArtical(bikeName) {
+    let data='<p>If you searching for the bike '+bikeName+` then is the correct place to find all details about `+bikeName+`. you can find price, colors, mileage, Engine, transmission, Chassis, suspension, brakes, wheels, Physical measures, capacities, and many other things. Now we will move on to the specific features.</p>`
     var mainContent = document.getElementById(articalSectionId);
     newSection = document.createElement('section'); //create a div
     newSection.className = "preArtical";
     newSection.id = "preArtical";
-    var tag = ``;
+    var tag = data;
     newSection.innerHTML = tag;
     mainContent.appendChild(newSection); //append to the doc.body
     mainContent.insertBefore(newSection, mainContent.lastChild)
 }
-
-
 
 // inilaize post post section
 function initPostArtical() {
@@ -110,11 +110,12 @@ function initPostArtical() {
     mainContent.insertBefore(newSection, mainContent.lastChild)
 }
 
-bikeName=document.title
-category=bikeName.split(" ")[0]
-tablePath=category+"/"+bikeName   // firebase table path for speific bike
-
+bikeName=document.title;
+initPreArtical(bikeName);
+category=bikeName.split(" ")[0];
+tablePath=category+"/"+bikeName ;  // firebase table path for speific bike
 var tableDatas=loadDataFromFirebase(tablePath);
+putMetaDescri(bikeName)
 // initPreArtical();
 
 // initPostArtical();
