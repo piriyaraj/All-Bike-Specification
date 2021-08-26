@@ -15,7 +15,7 @@ import urlexract
 databaseUrl = "https://all-bike-specification-default-rtdb.firebaseio.com/"
 
 
-noOfPost=1000
+noOfPost=200
 
 
 accNO=0

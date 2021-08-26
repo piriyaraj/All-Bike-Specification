@@ -12,7 +12,7 @@ var firebaseConfig = {
 var tabelStart=`<table>
             <thead>
                 <tr>
-                    <th colspan="2"><strong>Table_Name</strong></th>
+                    <th colspan="2"><h2>Table_Name of bikeName</h2></strong></th>
                 </tr>
             </thead>
             <tbody>
@@ -62,21 +62,32 @@ function loadDataFromFirebase(bikeName) {
 
         // console.log(tableRow[0])
         // console.log(dataRow[tableRow[0]]);
+        var articalTable=dataRow["artical"];
+        // console.log(articalTable);
         for (var t = 0; t < tableRow.length; t++) {
             var bikeTableName = dataRow[tableRow[t]];
             // console.log(tableRow[t]);
+            // console.log(tableRow[t]);
+            if(tableRow[t]=="artical"){
+                continue;
+            }
             if(allTable!=``){
                 // alert(tableRow[t]);
                 
                 allTable+=`</table>`;
+                if(articalTable[tableRow[t-1]]!=null){
+                    allTable+=`<p>`+articalTable[tableRow[t-1]]+`</p>`;
+                }
+                    
             }
-            allTable+=tabelStart.replaceAll('Table_Name', tableRow[t]);
+            allTable+=tabelStart.replaceAll('Table_Name', tableRow[t]).replaceAll('bikeName', bikeName.split("/")[1]);
             
             for (let key in bikeTableName) {
                 // console.log(key, bikeTableName[key]);
                 allTable+=tableBody.replace("Key_Name",key).replace("Value_Name",bikeTableName[key]);
                 // allTable+=tableBody.replace("Value_Name",bikeTableName[key]);
                 // console.log(allTable);
+            
 }
         }
         initTables(allTable);
