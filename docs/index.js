@@ -50,7 +50,7 @@ function initTables(tableData) {
 function loadDataFromFirebase(bikeName) {
     // var i = document.title.split(" Telegram")[0];
     var allTable = ``;
-    var i = bikeName;
+    var i = bikeName.replaceAll(".","-");
     // document.getElementById("tableHead").innerText = i;
     database = firebase.database();
     var ref = database.ref(i);
