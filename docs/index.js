@@ -1,4 +1,5 @@
 var articalSectionId = "root";
+var allTable=``;
 var firebaseConfig = {
     apiKey: "AIzaSyAQUijW2WS2RuC6mIagywLjRHaAg750GHs",
     authDomain: "all-bike-specification.firebaseapp.com",
@@ -49,8 +50,8 @@ function initTables(tableData) {
 // load datas form firebase give input as catogory with bike name ex:"Acabion/Acabion Da Vinci 650-VI" output tableName and data
 function loadDataFromFirebase(bikeName) {
     // var i = document.title.split(" Telegram")[0];
-    var allTable=``;
-    var i=bikeName;
+    var i=bikeName.replaceAll(".","-");
+    // alert(i);
     // document.getElementById("tableHead").innerText = i;
     database = firebase.database();
     var ref = database.ref(i);
@@ -90,8 +91,9 @@ function loadDataFromFirebase(bikeName) {
             
 }
         }
-        initTables(allTable);
-        return allTable;
+        // initTables(allTable);
+        // return allTable;
+        console.log(allTable);
     });
     
 }
@@ -122,7 +124,7 @@ function initPostArtical() {
 }
 
 bikeName=document.title;
-initPreArtical(bikeName);
+// initPreArtical(bikeName);
 category=bikeName.split(" ")[0];
 tablePath=category+"/"+bikeName ;  // firebase table path for speific bike
 var tableDatas=loadDataFromFirebase(tablePath);
