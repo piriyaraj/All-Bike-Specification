@@ -1,0 +1,17 @@
+{
+    "name": "bloggerautopost",
+    "version": "1.0.0",
+    "description": "upload post to blogger using blogger api",
+    "main": "index.js",
+    "scripts": {
+        "start": "index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "blogger",
+        "api",
+        "autopost"
+    ],
+    "author": "piriyaraj s",
+    "license": "ISC"
+}

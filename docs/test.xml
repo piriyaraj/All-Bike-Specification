@@ -1,0 +1,12 @@
+<b:if cond='data:blog.pageType == &quot;index&quot;'>
+		<b:else/>
+			<b:if cond='data:blog.pageType != &quot;error_page&quot;'>
+				<b:if cond='false'>
+					<data:blog.pageName/>
+				<b:else/>
+					<data:blog.pageName/>
+				</b:if>
+			<b:else/>
+				404 | <data:blog.title/>
+			</b:if>
+		</b:if>

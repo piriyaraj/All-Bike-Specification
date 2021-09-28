@@ -4,43 +4,42 @@ import sys
 from oauth2client import client
 from googleapiclient import sample_tools
 import time
+from firebase import firebase
 
 noOfPost = 100
+databaseUrl = "https://colabfacebook-default-rtdb.firebaseio.com/"
+
+firebase = firebase.FirebaseApplication(databaseUrl, None)
+# def filemake(name):
+#     try:
+#         file=open(name,"r+")
+#     except:
+#         open(name,"w").close()
+#         file=open(name,"r+")
+#     return file
 
 
-def filemake(name):
-    try:
-        file=open(name,"r+")
-    except:
-        open(name,"w").close()
-        file=open(name,"r+")
-    return file
+def getTitels():
+    data=firebase.get('/Website/AllBikeSpecification/data/posted',None)
+    # print(data.keys())
+    return list(data.keys())
 
 
-def read():
-    file = open("./data/posted.txt", "r")
-    firLi = file.readline().replace("\n", "")
-    file.close()
-    return firLi
 
 # delete first line
 
 
-def delete():
-    file = open("./data/posted.txt", "r")
-    firLi = file.readlines()
-    file.close()
-    file = open("./data/posted.txt", "w")
-    file.write("".join(firLi[1:]))
-    file.close()
+def delete(BikeName):
+    return firebase.delete('/Website/AllBikeSpecification/data/posted/'+BikeName,None)
 
 # last post link
 
 
-def posted(posted_link):
-    file = open("./data/postTitleInBlogger.txt", "a")
-    file.write(posted_link+"\n")
-    file.close()
+def posted(bikeName):
+    firebase.patch("/Website/AllBikeSpecification/data/postedInBlogger",{bikeName:'title'})
+    # file = open("./data/postTitleInBlogger.txt", "a")
+    # file.write(posted_link+"\n")
+    # file.close()
 
 
 def postTitlesInBlogger(postName, argv):
@@ -79,15 +78,13 @@ def postTitlesInBlogger(postName, argv):
 
 def Run():
     count = 0
-
+    toPostTitles=getTitels()
     for i in range(noOfPost):
         # time.sleep(10)
-        postTitle = read()
-        #print(postTitle)
-        if(postTitle == ""):
-            print("No new posts")
-            break
-                
+        try:
+            postTitle = toPostTitles[i]
+        except:
+            break                    
 
         if(i < 9):
             print(" ", end="")
@@ -108,7 +105,7 @@ def Run():
         print("")
 
         posted(postTitle)
-        delete()
+        delete(postTitle)
         count = i+1
         time.sleep(10)
 
@@ -117,5 +114,20 @@ def Run():
 
 
 
-Run()
-input()
+if __name__=="__main__":
+
+    # get all posted title form firebase topost lis
+    # getTitels()
+
+    # delete a bikeName after post in blogger
+    # print(delete("AAA BBB"))
+
+    # uploading posted title in blogger into firebase
+    # print(posted("AAA BBB"))
+    filepostedToBlogger = open("postTitleInBlogger.txt",'r')
+    for i in filepostedToBlogger.readlines():
+        title=i.split("\n")[0]
+        print(title.replace(".","-"))
+        delete(title.replace(".","-"))
+    pass
+

@@ -4,43 +4,51 @@ import sys
 from oauth2client import client
 from googleapiclient import sample_tools
 import time
+import re
+# from sys import ps1
+from bs4.element import ResultSet
+import requests
+from bs4 import BeautifulSoup, dammit
+from firebase import firebase
+import pyrebase
+from requests.models import ReadTimeoutError
+from firebase import firebase
 
 noOfPost = 100
 
+databaseUrl = "https://colabfacebook-default-rtdb.firebaseio.com/Website/AllBikeSpecification/"
+dataBase = firebase.FirebaseApplication(databaseUrl, None)
 
-def filemake(name):
-    try:
-        file=open(name,"r+")
-    except:
-        open(name,"w").close()
-        file=open(name,"r+")
-    return file
+# def filemake(name):
+#     try:
+#         file=open(name,"r+")
+#     except:
+#         open(name,"w").close()
+#         file=open(name,"r+")
+#     return file
 
 
-def read():
-    file = open("./data/posted.txt", "r")
-    firLi = file.readline().replace("\n", "")
-    file.close()
-    return firLi
+def initialize():
+    dataSet = dataBase.get(databaseUrl, 'data/posted',)
+    toPostList = list(dataSet.keys())[:noOfPost]
+    return toPostList
+
+def insertData(tableName, data, dataBase, format="post"):
+    if(format == "patch"):
+        result = dataBase.patch(tableName, data)
+    else:
+        result = dataBase.post(tableName, data)
+
 
 # delete first line
-
-
-def delete():
-    file = open("./data/posted.txt", "r")
-    firLi = file.readlines()
-    file.close()
-    file = open("./data/posted.txt", "w")
-    file.write("".join(firLi[1:]))
-    file.close()
+def delete(bikeName):
+    return dataBase.delete(databaseUrl, 'data/posted/'+bikeName)
 
 # last post link
 
 
-def posted(posted_link):
-    file = open("./data/postTitleInBlogger.txt", "a")
-    file.write(posted_link+"\n")
-    file.close()
+def posted(title):
+    insertData('data/postedInBlogger',{title: "title"}, dataBase, format='patch')
 
 
 def postTitlesInBlogger(postName, argv):
@@ -48,7 +56,7 @@ def postTitlesInBlogger(postName, argv):
     service, flags = sample_tools.init(
         argv, 'blogger', 'v3', __doc__, __file__,
         scope='https://www.googleapis.com/auth/blogger')
-
+    return service
     try:
         users = service.users()
 
@@ -79,10 +87,11 @@ def postTitlesInBlogger(postName, argv):
 
 def Run():
     count = 0
+    toPostList=initialize()
 
     for i in range(noOfPost):
         # time.sleep(10)
-        postTitle = read()
+        postTitle = toPostList[i]
         #print(postTitle)
         if(postTitle == ""):
             print("No new posts")
@@ -116,6 +125,4 @@ def Run():
     print(count, " post posted")
 
 
-
-Run()
-input()
+print(postTitlesInBlogger("postName", sys.argv))

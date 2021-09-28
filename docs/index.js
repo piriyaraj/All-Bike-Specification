@@ -121,12 +121,13 @@ function initPostArtical() {
     mainContent.insertBefore(newSection, mainContent.lastChild)
 }
 
-bikeName = document.title;
+bikeName = document.title.split(" |")[0];
+alert(bikeName);
 initPreArtical(bikeName);
 category = bikeName.split(" ")[0];
 tablePath = category + "/" + bikeName;  // firebase table path for speific bike
 var tableDatas = loadDataFromFirebase(tablePath);
-putMetaDescri(bikeName)
+// putMetaDescri(bikeName);
 // initPreArtical();
 
 // initPostArtical();
