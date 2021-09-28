@@ -122,7 +122,7 @@ function initPostArtical() {
 }
 
 bikeName = document.title.split(" |")[0];
-alert(bikeName);
+// alert(bikeName);
 initPreArtical(bikeName);
 category = bikeName.split(" ")[0];
 tablePath = category + "/" + bikeName;  // firebase table path for speific bike
