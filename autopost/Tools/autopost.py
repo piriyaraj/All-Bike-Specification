@@ -135,7 +135,7 @@ def post():
 
 @app.route('/')
 def hello():
-    return 'Hello World!'
+    return 'Home Page'
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
