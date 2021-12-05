@@ -4,7 +4,7 @@ from oauth2client import client
 from googleapiclient import sample_tools
 import time
 from firebase import firebase
-from flask import Flask
+from flask import Flask,render_template
 import os
 from threading import Thread
 
@@ -131,7 +131,7 @@ def sample():
 def post():
     thread_a = Thread(target=Run, args=())
     thread_a.start()
-    return "run in background"
+    return render_template("timepage.html")
 
 @app.route('/')
 def hello():
