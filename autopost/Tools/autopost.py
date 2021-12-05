@@ -98,7 +98,7 @@ def Run():
 
         print(i+1, end=">>>")
         print(postTitle, end="")
-        print("-"*(45-len(postTitle)), end="status:")
+        print("-"*(60-len(postTitle)), end="status:")
         #postnow(driver,ptitle,ptag,pdescri,pcontent,pimage):
 
         status = postTitlesInBlogger(postTitle, sys.argv)
