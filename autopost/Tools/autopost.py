@@ -1,6 +1,5 @@
 from __future__ import print_function
 import sys
-import sys
 from oauth2client import client
 from googleapiclient import sample_tools
 import time
@@ -124,10 +123,11 @@ if __name__=="__main__":
 
     # uploading posted title in blogger into firebase
     # print(posted("AAA BBB"))
-    filepostedToBlogger = open("postTitleInBlogger.txt",'r')
-    for i in filepostedToBlogger.readlines():
-        title=i.split("\n")[0]
-        print(title.replace(".","-"))
-        delete(title.replace(".","-"))
+    # filepostedToBlogger = open("postTitleInBlogger.txt",'r')
+    # for i in filepostedToBlogger.readlines():
+    #     title=i.split("\n")[0]
+    #     print(title.replace(".","-"))
+    #     delete(title.replace(".","-"))
+    Run()
     pass
 
