@@ -72,11 +72,14 @@ def postTitlesInBlogger(postName, argv):
         
         posts.insert(blogId="5317390335310223575",body=body, isDraft=True).execute()
         
-        return "posted"
+        return ["posted",""]
 
     except client.AccessTokenRefreshError:
         print('The credentials have been revoked or expired, please re-run''the application to re-authorize')
-        return "failed"
+        return ["failed", "The credentials have been revoked or expired, please re-run''the application to re-authorize"]
+
+    except Exception as e:
+        return ["limit",e]
 
 
 @app.route('/post')
@@ -100,12 +103,16 @@ def Run():
 
         status = postTitlesInBlogger(postTitle, sys.argv)
         
-        print(status)
+        print(status[0])
 
         # postToblogger.postnow()
-        if(status == "failed"):
+        if(status[0] == "failed"):
             print("Exit!")
             break
+
+        if(status[0]=="limit"):
+            return status[1]
+
         print("")
 
         posted(postTitle)
