@@ -1,1 +1,1 @@
-web: python testing.py
+web: python autopost.py
