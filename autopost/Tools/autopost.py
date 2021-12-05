@@ -4,8 +4,11 @@ from oauth2client import client
 from googleapiclient import sample_tools
 import time
 from firebase import firebase
+from flask import Flask
 
-noOfPost = 100
+app = Flask(__name__)
+
+noOfPost = 1
 databaseUrl = "https://colabfacebook-default-rtdb.firebaseio.com/"
 
 firebase = firebase.FirebaseApplication(databaseUrl, None)
@@ -75,6 +78,7 @@ def postTitlesInBlogger(postName, argv):
         return "failed"
 
 
+@app.route('/post')
 def Run():
     count = 0
     toPostTitles=getTitels()
@@ -112,22 +116,11 @@ def Run():
     print(count, " post posted")
 
 
+@app.route('/')
+def hello():
+    return 'Hello World!'
 
-if __name__=="__main__":
-
-    # get all posted title form firebase topost lis
-    # getTitels()
-
-    # delete a bikeName after post in blogger
-    # print(delete("AAA BBB"))
-
-    # uploading posted title in blogger into firebase
-    # print(posted("AAA BBB"))
-    # filepostedToBlogger = open("postTitleInBlogger.txt",'r')
-    # for i in filepostedToBlogger.readlines():
-    #     title=i.split("\n")[0]
-    #     print(title.replace(".","-"))
-    #     delete(title.replace(".","-"))
-    Run()
-    pass
-
+if __name__ == '__main__':
+    # Bind to PORT if defined, otherwise default to 5000.
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
