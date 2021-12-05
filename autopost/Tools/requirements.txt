@@ -86,4 +86,3 @@ virtualenv==20.6.0
 virtualenv-clone==0.5.4
 Werkzeug==2.0.2
 sseclient==0.0.27
-google-api-python-client==2.32.0
