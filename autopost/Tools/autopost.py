@@ -79,7 +79,7 @@ def postTitlesInBlogger(postName, argv):
         return ["failed", "The credentials have been revoked or expired, please re-run''the application to re-authorize"]
 
     except Exception as e:
-        return ["limit",e]
+        return ["limit","Reached limited"]
 
 
 @app.route('/post')
