@@ -1,1 +1,1 @@
-web: autopost app.py
+web: autopost.py
