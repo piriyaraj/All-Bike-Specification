@@ -9,7 +9,7 @@ import os
 
 app = Flask(__name__)
 
-noOfPost = 1
+noOfPost = 100
 databaseUrl = "https://colabfacebook-default-rtdb.firebaseio.com/"
 
 firebase = firebase.FirebaseApplication(databaseUrl, None)
