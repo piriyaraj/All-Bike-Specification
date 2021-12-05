@@ -6,10 +6,11 @@ import time
 from firebase import firebase
 from flask import Flask
 import os
+from threading import Thread
 
 app = Flask(__name__)
 
-noOfPost = 100
+noOfPost = 1
 databaseUrl = "https://colabfacebook-default-rtdb.firebaseio.com/"
 
 firebase = firebase.FirebaseApplication(databaseUrl, None)
@@ -82,7 +83,6 @@ def postTitlesInBlogger(postName, argv):
         return ["limit","Reached limited"]
 
 
-@app.route('/post')
 def Run():
     count = 0
     toPostTitles=getTitels()
@@ -124,6 +124,14 @@ def Run():
 
     return str(count)+ " post posted"
 
+def sample():
+    for i in range(10):
+        time.sleep(2)
+@app.route('/post')
+def post():
+    thread_a = Thread(target=Run, args=())
+    thread_a.start()
+    return "run in background"
 
 @app.route('/')
 def hello():
@@ -132,4 +140,4 @@ def hello():
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port,debug=True)
