@@ -119,7 +119,7 @@ def Run():
         posted(postTitle)
         delete(postTitle)
         count = i+1
-        time.sleep(10)
+        time.sleep(20)
 
     print(str(count) + " post posted")
     return str(count)+ " post posted"
