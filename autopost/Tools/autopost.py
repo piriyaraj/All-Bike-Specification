@@ -107,13 +107,14 @@ def Run():
 
         # postToblogger.postnow()
         if(status[0] == "failed"):
-            print("Exit!")
+            print(status[1])
             break
 
         if(status[0]=="limit"):
+            print(status[1])
             return status[1]
 
-        print("")
+        # print("")
 
         posted(postTitle)
         delete(postTitle)
