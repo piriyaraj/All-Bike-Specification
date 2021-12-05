@@ -80,7 +80,7 @@ def postTitlesInBlogger(postName, argv):
         return ["failed", "The credentials have been revoked or expired, please re-run''the application to re-authorize"]
 
     except Exception as e:
-        return ["limit","Reached limited"]
+        return ["limit",e]
 
 
 def Run():
