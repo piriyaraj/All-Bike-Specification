@@ -114,7 +114,7 @@ def Run():
         time.sleep(10)
 
 
-    print(count, " post posted")
+    return str(count)+ " post posted"
 
 
 @app.route('/')
